@@ -1,0 +1,358 @@
+This patch will fix the following MikMod 3.1.6 problems:
+
+  - full paths option didn't work correctly
+  - "on exit" submenu didn't appear in the "other options" configuration menu
+  - a few playlist display glitches if the terminal width is different from
+    80 columns
+  - modules in the form mod.title.gz couldn't be loaded
+  
+To apply the patch, enter your mikmod source directory and run
+
+  patch -p1 < path/to/patch-mikmod-3.1.6-a
+
+(adjust the path to the patch file, of course).
+
+
+diff -uNr mikmod-3.1.6/src/display.c mikmod-3.1.6-a/src/display.c
+--- mikmod-3.1.6/src/display.c	Mon Jul  5 06:03:43 1999
++++ mikmod-3.1.6-a/src/display.c	Wed Jul 14 20:17:39 1999
+@@ -20,7 +20,7 @@
+ 
+ /*==============================================================================
+ 
+-  $Id$
++  $Id$
+ 
+   Display routines for the different panels and the playlist menu
+ 
+@@ -292,24 +292,18 @@
+ 	if ((entry=PL_GetCurrent(&playlist))) {
+ 		CHAR *archive=entry->archive,*file;
+ 
+-		if (archive) {
++		if (archive && !config.fullpaths) {
+ 			archive=strrchr(entry->archive,PATH_SEP);
+-			if (archive) {
+-				if (config.fullpaths)
+-					while ((archive>entry->archive)&&(*--archive!=PATH_SEP));
+-				else
+-					archive++;
+-			} else
++			if (archive)
++				archive++;
++			else
+ 				archive=entry->archive;
+ 		}
+ 
+ 		file=strrchr(entry->file,PATH_SEP);
+-		if (file) {
+-			if (config.fullpaths)
+-				while ((file>entry->file)&&(*--file!=PATH_SEP));
+-			else
+-				file++;
+-		} else
++		if (file && !config.fullpaths)
++			file++;
++		else
+ 			file=entry->file;
+ 
+ 		if ((archive)&&(strlen(file)<MAXWIDTH-13)) {
+@@ -388,6 +382,7 @@
+ 			sprintf(time,"/%2d:%02d",
+ 			        (int)((cur->time/60)%60),(int)(cur->time%60));
+ #endif
++#if LIBMIKMOD_VERSION >= 0x030107
+ 		if (mf->flags&UF_NNA) {
+ #ifdef HAVE_SNPRINTF
+ 			snprintf(channels,17,"%2d/%d+%d->%d",
+@@ -396,7 +391,9 @@
+ 			sprintf(channels,"%2d/%d+%d->%d",
+ 			     mf->realchn,mf->numchn,mf->totalchn-mf->realchn,mf->totalchn);
+ #endif
+-		} else {
++		} else
++#endif
++		       {
+ #ifdef HAVE_SNPRINTF
+ 			snprintf(channels,17,"%2d/%d      ",mf->realchn,mf->numchn);
+ #else
+@@ -829,12 +826,9 @@
+ 		timelen=strlen(time);
+ 	}
+ 	name=strrchr(pos->file,PATH_SEP);
+-	if (name) {
+-		if (config.fullpaths)
+-			while ((name>pos->file)&&(*--name!=PATH_SEP));
+-		else
+-			name++;
+-	} else
++	if (name && !config.fullpaths)
++		name++;
++	else
+ 		name=pos->file;
+ 
+ 	if (pos==cur) sort='>';
+@@ -875,8 +869,8 @@
+ 				sprintf(storage,tmpfmt,nr,sort,name);
+ #endif
+ 			}
+-	} else if (strlen(name)>33-timelen) {
+-		name=name+strlen(name)-(30-timelen);
++	} else if (strlen(name)>width-7-timelen) {
++		name=name+strlen(name)-(width-10-timelen);
+ 		if (timelen) {
+ 			sprintf(tmpfmt,"%%4i %%c...%%-%ds%%s",width-16);
+ #ifdef HAVE_SNPRINTF
+diff -uNr mikmod-3.1.6/src/marchive.c mikmod-3.1.6-a/src/marchive.c
+--- mikmod-3.1.6/src/marchive.c	Mon Jul  5 06:03:43 1999
++++ mikmod-3.1.6-a/src/marchive.c	Sun Jul 11 19:50:57 1999
+@@ -20,7 +20,7 @@
+ 
+ /*==============================================================================
+ 
+-  $Id$
++  $Id$
+ 
+   Archive support
+ 
+@@ -206,18 +206,22 @@
+ 	"*.[Ii][Mm][Ff]",
+ 	"*.[Ii][Tt]",
+ 	"*.[Mm][Ee][Dd]",
+-	"[Mm][Ee][Dd].*",
+ 	"*.[Mm][Oo][Dd]",
+-	"[Mm][Oo][Dd].*",
+ 	"*.[Mm][Tt][Mm]",
+ 	"*.[Nn][Ss][Tt]",	/* noisetracker */
+-	"[Nn][Ss][Tt].*",
+ 	"*.[Ss]3[Mm]",
+ 	"*.[Ss][Tt][Mm]",
+ 	"*.[Ss][Tt][Xx]",
+ 	"*.[Uu][Ll][Tt]",
+ 	"*.[Uu][Nn][Ii]",
+ 	"*.[Xx][Mm]",
++	NULL
++};
++
++static CHAR* prefixmodulepatterns[]={
++	"[Mm][Ee][Dd].*",
++	"[Mm][Oo][Dd].*",
++	"[Nn][Ss][Tt].*",
+ 	"[Xx][Mm].*",		/* found on Aminet */
+ 	NULL
+ };
+@@ -260,6 +264,20 @@
+ 	return 0;
+ }
+ 
++/* The same, but also checks for prefix names */
++static BOOL MA_isModuleFilename2(CHAR* filename)
++{
++	int t;
++
++	for (t=0;modulepatterns[t];t++)
++		if (!fnmatch(modulepatterns[t],filename,FNM_NOESCAPE))
++			return 1;
++	for (t=0;prefixmodulepatterns[t];t++)
++		if (!fnmatch(prefixmodulepatterns[t],filename,FNM_NOESCAPE))
++			return 1;
++	return 0;
++}
++
+ /* Determines if a filename extension matches an archive filename extension
+    pattern */
+ static BOOL MA_MatchExtension(CHAR *archive,CHAR *ends)
+@@ -450,7 +468,8 @@
+ 		if (PL_Load(pl,filename))
+ 			return;
+ 
+-	/* if filename looks like a module, don't try to unzip the file...*/
++	/* if filename looks like a module and not like an archive, don't try to
++	   unzip the file...*/
+ 	if (MA_isModuleFilename(filename)) {
+ 		PL_Add(pl,filename,NULL,0,0);
+ 		return;
+@@ -488,7 +507,7 @@
+ 					for (t=0;string[t]!=' ';t++);
+ 					string[t]=0;
+ 				}
+-				if (MA_isModuleFilename(string+MA_archiver[archive].nameoffset))
++				if (MA_isModuleFilename2(string+MA_archiver[archive].nameoffset))
+ 					PL_Add(pl,(string+MA_archiver[archive].nameoffset),filename,0,0);
+ 				fgets(string,PATH_MAX,file);
+ 			}
+@@ -563,7 +582,7 @@
+ 									for (t=0;string[t]!=' ';t++);
+ 									string[t]=0;
+ 								}
+-								if (MA_isModuleFilename(string+MA_archiver[archive].nameoffset))
++								if (MA_isModuleFilename2(string+MA_archiver[archive].nameoffset))
+ 									PL_Add(pl,(string+MA_archiver[archive].nameoffset),filename,0,0);
+ 							}
+ 						}
+@@ -589,7 +608,7 @@
+ 			if (spare) {
+ 				strncpy(spare,slash,dot-slash);spare[dot-slash]=0;
+ 
+-				if (MA_isModuleFilename(spare)) PL_Add(pl,spare,filename,0,0);
++				if (MA_isModuleFilename2(spare)) PL_Add(pl,spare,filename,0,0);
+ 				free(spare);
+ 			}
+ 		}
+diff -uNr mikmod-3.1.6/src/mconfedit.c mikmod-3.1.6-a/src/mconfedit.c
+--- mikmod-3.1.6/src/mconfedit.c	Mon Jul  5 06:03:43 1999
++++ mikmod-3.1.6-a/src/mconfedit.c	Wed Jul 14 20:18:54 1999
+@@ -20,7 +20,7 @@
+ 
+ /*==============================================================================
+ 
+-  $Id$
++  $Id$
+ 
+   The config editor
+ 
+@@ -89,8 +89,10 @@
+ 
+ static MENTRY output_entries[]={
+ 	{NULL,			0,"The device driver for output"},
+-	{"Driver &options [%s]|Enter driver options:|999|12",
++#if LIBMIKMOD_VERSION >= 0x030107
++	{"Driver &options [%s]|Enter driver options:|99|16",
+ 					0,"Driver options (e.g. \"buffer=14,count=16\" for the OSS-driver)"},
++#endif
+ 	{"[%c] &Stereo",	0,"mono/stereo output"},
+ 	{"[%c] 16 &bit output",0,"8/16 bit output"},
+ 	{"&Frequency      [%d]|Enter mixing frequency:|4000|60000",
+@@ -100,7 +102,13 @@
+ 	{"[%c] S&urround",0,"Use surround mixing"},
+ 	{"&Reverb            [%d]|Enter reverb amount:|0|15",
+ 					0,"Reverb amount from 0 (no reverb) to 15"}};
+-static MMENU output_menu={0,0,9,1,output_entries,handle_menu,NULL,NULL,1};
++static MMENU output_menu={0,0,
++#if LIBMIKMOD_VERSION >= 0x030107
++                              9,
++#else
++                              8,
++#endif
++                                1,output_entries,handle_menu,NULL,NULL,1};
+ 
+ static MENTRY playback_entries[]={
+ 	{"&Volume   [%d]|Enter output volume:|0|100",
+@@ -134,7 +142,7 @@
+ 				"Change process priority, MikMod must be restarted to change this"},
+ 	{"Status&bar     [%o]|None|Small|Big",0,"Size of the statusbar"},
+ 	{"&On exit             >",&exit_menu,""}};
+-static MMENU other_menu={0,0,6,1,other_entries,handle_menu,NULL,NULL,3};
++static MMENU other_menu={0,0,7,1,other_entries,handle_menu,NULL,NULL,3};
+ 
+ static MENTRY entries[]={
+ 	{"&Output options   >",&output_menu,""},
+diff -uNr mikmod-3.1.6/src/mikmod.1 mikmod-3.1.6-a/src/mikmod.1
+--- mikmod-3.1.6/src/mikmod.1	Mon Jul  5 06:03:43 1999
++++ mikmod-3.1.6-a/src/mikmod.1	Sun Aug  1 21:27:22 1999
+@@ -392,7 +392,7 @@
+ .SH AUTHORS
+ 
+ 
+-MikMod is the result of the work of many people, including:
++\fIMikMod\fP is the result of the work of many people, including:
+ Jean-Paul Mikkers, Jake Stine, Miodrag Vallat, Frank Loemker, Steve McIntyre,
+ Peter Amstutz, "MenTaLguY", Dimitri Boldyrev, Shlomi Fish, Stefan Tibus,
+ Tinic Urou.
+diff -uNr mikmod-3.1.6/src/mikmod.c mikmod-3.1.6-a/src/mikmod.c
+--- mikmod-3.1.6/src/mikmod.c	Mon Jul  5 06:03:43 1999
++++ mikmod-3.1.6-a/src/mikmod.c	Wed Jul 14 20:20:54 1999
+@@ -404,12 +404,17 @@
+ 	             ((cfg->driver)&&(cfg->driver!=md_device))||
+ 	             (!cmp_bit(md_mode,DMODE_16BITS,cfg->mode_16bit))||
+ 	             (!cmp_bit(md_mode,DMODE_STEREO,cfg->stereo))||
+-	             (!cmp_bit(md_mode,DMODE_HQMIXER,cfg->hqmixer))||
+-				 ((!driveroptions && cfg->driveroptions) ||
+-				  (driveroptions && strcmp(driveroptions,cfg->driveroptions))));
++	             (!cmp_bit(md_mode,DMODE_HQMIXER,cfg->hqmixer))
++#if LIBMIKMOD_VERSION >= 0x030107
++				 ||((!driveroptions && cfg->driveroptions) ||
++				  (driveroptions && strcmp(driveroptions,cfg->driveroptions)))
++#endif
++	             );
+ 
++#if LIBMIKMOD_VERSION >= 0x030107
+ 	if (driveroptions) free(driveroptions);
+ 	driveroptions=strdup(cfg->driveroptions);
++#endif
+ 
+ 	md_pansep=128; /* panning separation (0=mono 128=full stereo) */
+ 	md_volume=(cfg->volume*128)/100;
+diff -uNr mikmod-3.1.6/src/mlist.c mikmod-3.1.6-a/src/mlist.c
+--- mikmod-3.1.6/src/mlist.c	Mon Jul  5 06:03:43 1999
++++ mikmod-3.1.6-a/src/mlist.c	Sun Jul 11 19:49:33 1999
+@@ -20,7 +20,7 @@
+ 
+ /*==============================================================================
+ 
+-  $Id$
++  $Id$
+ 
+   Functions to handle the playlist.
+ 
+@@ -296,7 +296,7 @@
+ 		else {
+ 			/* we're loading a playlist, so it might be necessary to convert
+ 			   playlist paths to relative paths from cwd */
+-			if (slash) {
++			if (slash && path_relative(arc?arc:mod)) {
+ 				CHAR *dummy;
+ 
+ 				dummy=malloc(slash+1-filename+strlen(arc?arc:mod)+1);
+diff -uNr mikmod-3.1.6/src/mutilities.c mikmod-3.1.6-a/src/mutilities.c
+--- mikmod-3.1.6/src/mutilities.c	Mon Jul  5 06:03:43 1999
++++ mikmod-3.1.6-a/src/mutilities.c	Sun Jul 11 19:49:33 1999
+@@ -20,7 +20,7 @@
+ 
+ /*==============================================================================
+ 
+-  $Id$
++  $Id$
+ 
+   Some utility functions
+ 
+@@ -68,6 +68,18 @@
+ 	struct stat sb;
+ 
+ 	return (stat(file,&sb)==-1)?0:1;
++}
++
++/* determines if a given path is absolute or relative */
++BOOL path_relative(char *path)
++{
++	if (!path) return 1;
++	
++#if defined(__OS2__)||defined(__EMX__)
++	if (*path && (path[1]==':')) return 0;
++#endif
++
++	return (*path!=PATH_SEP);
+ }
+ 
+ /* allocate and return a name for a temporary file */
+diff -uNr mikmod-3.1.6/src/mutilities.h mikmod-3.1.6-a/src/mutilities.h
+--- mikmod-3.1.6/src/mutilities.h	Mon Jul  5 06:03:43 1999
++++ mikmod-3.1.6-a/src/mutilities.h	Sun Jul 11 19:49:33 1999
+@@ -20,7 +20,7 @@
+ 
+ /*==============================================================================
+ 
+-  $Id$
++  $Id$
+ 
+   Some utility functions
+ 
+@@ -37,6 +37,8 @@
+ char *get_tmp_name(void);
+ 
+ BOOL file_exist(char*);
++/* determines if a given path is absolute or relative */
++BOOL path_relative(char*);
+ 
+ /* allocate and return a filename including the path for a config file
+    'name': filename without the path */
