@@ -27,7 +27,7 @@ MikMod is one of the best and most well known MOD music file players
 for UNIX-like systems. This particular distribution is intended to
 compile fairly painlessly in a Linux environment. MikMod uses the OSS
 /dev/dsp driver including all recent kernels for output, and will also
-write .wav files. Supported file formats include MOD, STM, S3M, MTM,
+write .WAV files. Supported file formats include MOD, STM, S3M, MTM,
 XM, ULT, and IT. The player uses ncurses for console output and
 supports transparent loading from gzip/pkzip/zoo archives and the
 loading/saving of playlists.
@@ -49,7 +49,7 @@ Jean-Paul Mikkers (MikMak) para o DOS. Ele foi subseqüentemente
 modificado por muitas mãos e agora roda em muitas plataformas, com
 esta distribuição projetada para compilar sem problemas em um ambiente
 Unix (Linux). Ele usa o driver /dev/dsp OSS incluso em todos os kernel
-recentes para saída e também escreve arquivos wav. Os formatos de
+recentes para saída e também escreve arquivos WAV. Os formatos de
 arquivos suportados incluem: mod, stm, s3m, mtm, xm e it. O reprodutor
 usa ncurses para saída no console e suporta carga transparente de
 arquivos gzip/pkzip/zoo e carga/gravação de listas de músicas para
@@ -63,7 +63,7 @@ DOS. Fue sucesivamente modificado por muchas manos y ahora se ejecuta
 en muchas plataformas, con esta distribución proyectada para compilar
 sin problemas en un ambiente Unix (Linux). Usa el driver /dev/dsp OSS
 incluso en todos los kernel recientes para salida y también escribe
-archivos wav. Los formatos de archivos soportados incluyen: mod, stm,
+archivos WAV. Los formatos de archivos soportados incluyen: mod, stm,
 s3m, mtm, xm y it. El reproductor usa ncurses para salida en la
 pantalla y soporta carga transparente de archivos gzip/pkzip/zoo y
 carga/grabación de listas de músicas para reproducción.
