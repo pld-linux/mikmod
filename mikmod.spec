@@ -10,6 +10,7 @@ Release:	6
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://www.mikmod.org/files/mikmod/%{name}-%{ver}-%{rel}.tar.gz
+# Source0-md5:	eb66900fac76e9cc280a1c85efec3733
 URL:		http://www.mikmod.org/
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	libmikmod-devel >= 3.1.7
