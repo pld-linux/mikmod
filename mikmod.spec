@@ -43,12 +43,3 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc {README,README.EsounD,AUTHORS,ChangeLog}.gz
 %attr(755, root, root) %{_bindir}/mikmod
-
-%changelog
-* Fri Jul 09 1999 Jan Rêkorajski <baggins@pld.org.pl>
-- FHS 2.0
-- gzipping docs
-- macros
-
-* Fri Sep 25 1998 Joel Young <jyoung@erols.com>
-- created RPM spec file
