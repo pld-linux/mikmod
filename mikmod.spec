@@ -68,7 +68,7 @@ carga/grabación de listas de músicas para reproducción.
 %setup -q -n %{name}-%{ver}-%{rel}
 
 %build
-aclocal
+%{__aclocal}
 %{__autoconf}
 CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
 %configure
