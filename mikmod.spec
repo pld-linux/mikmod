@@ -12,10 +12,10 @@ Group:		Applications/Sound
 Source0:	http://www.mikmod.org/files/mikmod/%{name}-%{ver}-%{rel}.tar.gz
 # Source0-md5:	eb66900fac76e9cc280a1c85efec3733
 URL:		http://www.mikmod.org/
-BuildRequires:	ncurses-devel >= 5.0
-BuildRequires:	libmikmod-devel >= 3.1.7
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	libmikmod-devel >= 3.1.7
+BuildRequires:	ncurses-devel >= 5.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -79,7 +79,8 @@ CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
