@@ -11,7 +11,7 @@ Patch0:		mikmod-s3mvolslides.patch
 Patch1:		mikmod-config.patch
 Patch2:		mikmod-ncurses.patch
 URL:		http://www.mygale.org/~miodrag/mikmod/index.html
-BuildPrereq:	ncurses-devel
+BuildRequires:	ncurses-devel
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
