@@ -9,10 +9,6 @@ Version:	%{ver}%{rel}
 Release:	6
 License:	GPL
 Group:		Applications/Sound
-Group(de):	Applikationen/Laut
-Group(es):	Aplicaciones/Sonido
-Group(pl):	Aplikacje/D¼wiêk
-Group(pt_BR):	Aplicações/Som
 Source0:	http://www.mikmod.org/files/mikmod/%{name}-%{ver}-%{rel}.tar.gz
 URL:		http://www.mikmod.org/
 BuildRequires:	ncurses-devel >= 5.0
