@@ -4,14 +4,14 @@ Summary:	Sound module player
 Summary(pl):	Odtwarzacz modu³ów d¼wiêkowych
 Name:		mikmod
 Version:	%{ver}%{rel}
-Release:	1
+Release:	2
 Copyright:	GPL/LGPL
 Group:		Applications/Sound
 Group(pl):	Aplikacje/D¼wiêk
-Source:		http://http://www.multimania.com/miodrag/mikmod/%{name}-%{ver}.tar.gz
+Source:		http://www.multimania.com/miodrag/mikmod/%{name}-%{ver}.tar.gz
 Patch:		mikmod-%{ver}-a.patch
-URL:		http://http://www.multimania.com/miodrag/mikmod/
-BuildRequires:	ncurses-devel
+URL:		http://www.multimania.com/miodrag/mikmod/
+BuildRequires:	ncurses-devel >= ncurses 5.0
 BuildRequires:	libmikmod-devel >= 3.1.7
 BuildRoot:	/tmp/%{name}-%{version}-root
 
