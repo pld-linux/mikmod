@@ -8,9 +8,9 @@ Release:	2
 Copyright:	GPL/LGPL
 Group:		Applications/Sound
 Group(pl):	Aplikacje/D¼wiêk
-Source:		http://www.multimania.com/miodrag/mikmod/%{name}-%{ver}.tar.gz
+Source:		http://mikmod.darkorb.net/mikmod/%{name}-%{ver}.tar.gz
 Patch:		mikmod-%{ver}-a.patch
-URL:		http://www.multimania.com/miodrag/mikmod/
+URL:		http://mikmod.darkorb.net/
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	libmikmod-devel >= 3.1.7
 BuildRoot:	/tmp/%{name}-%{version}-root
