@@ -1,3 +1,4 @@
+# TODO: current stable version is 3.2.1
 %define		ver	3.1.6
 %define		rel	a
 Summary:	XM, MOD, MTM, S3M, STM, ULT, IT and UNI module player
@@ -9,7 +10,7 @@ Version:	%{ver}%{rel}
 Release:	8
 License:	GPL
 Group:		Applications/Sound
-# note: current stable version is 3.2.1
+#Source0Download: http://mikmod.raphnet.net/
 Source0:	http://mikmod.raphnet.net/files/%{name}-%{ver}-%{rel}.tar.gz
 # Source0-md5:	eb66900fac76e9cc280a1c85efec3733
 Patch0:		%{name}-marchive_security.patch
