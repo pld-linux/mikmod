@@ -14,6 +14,8 @@ Patch0:		%{name}-%{ver}-a.patch
 URL:		http://mikmod.darkorb.net/
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	libmikmod-devel >= 3.1.7
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
