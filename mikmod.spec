@@ -9,7 +9,7 @@ License:	GPL
 Group:		Applications/Sound
 Group(pl):	Aplikacje/D¼wiêk
 Source0:	http://mikmod.darkorb.net/mikmod/%{name}-%{ver}.tar.gz
-Patch0:		mikmod-%{ver}-a.patch
+Patch0:		%{name}-%{ver}-a.patch
 URL:		http://mikmod.darkorb.net/
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	libmikmod-devel >= 3.1.7
@@ -28,15 +28,14 @@ IT, MOD, MED, MTM, S3M, ULT, XM i MOD-15.
 %patch -p1
 
 %build
-CFLAGS="$RPM_OPT_FLAGS -I/usr/include/ncurses"
-LDFLAGS="-s";
-export CFLAGS LDFLAGS
+CFLAGS="$RPM_OPT_FLAGS -I/usr/include/ncurses"; export CFLAGS
 %configure
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install DESTDIR="$RPM_BUILD_ROOT"
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man1/* \
