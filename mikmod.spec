@@ -4,7 +4,7 @@ Summary:	Sound module player
 Summary(pl):	Odtwarzacz modu³ów d¼wiêkowych
 Name:		mikmod
 Version:	%{ver}%{rel}
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Sound
 Group(pl):	Aplikacje/D¼wiêk
