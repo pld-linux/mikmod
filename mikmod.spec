@@ -29,6 +29,8 @@ IT, MOD, MED, MTM, S3M, ULT, XM i MOD-15.
 %patch -p1
 
 %build
+aclocal
+autoconf
 CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
 %configure
 
