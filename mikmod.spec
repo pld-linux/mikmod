@@ -11,7 +11,7 @@ Group(pl):	Aplikacje/D¼wiêk
 Source:		http://www.multimania.com/miodrag/mikmod/%{name}-%{ver}.tar.gz
 Patch:		mikmod-%{ver}-a.patch
 URL:		http://www.multimania.com/miodrag/mikmod/
-BuildRequires:	ncurses-devel >= ncurses 5.0
+BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	libmikmod-devel >= 3.1.7
 BuildRoot:	/tmp/%{name}-%{version}-root
 
