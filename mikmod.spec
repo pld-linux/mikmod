@@ -4,14 +4,13 @@ Summary:	Sound module player
 Summary(pl):	Odtwarzacz modu³ów d¼wiêkowych
 Name:		mikmod
 Version:	%{ver}%{rel}
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
 Group(pl):	Aplikacje/D¼wiêk
-Source0:	http://mikmod.darkorb.net/mikmod/%{name}-%{ver}.tar.gz
-Patch0:		%{name}-%{ver}-a.patch
-URL:		http://mikmod.darkorb.net/
+Source0:	http://www.mikmod.org/files/mikmod/%{name}-%{ver}-%{rel}.tar.gz
+URL:		http://www.mikmod.org/
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	libmikmod-devel >= 3.1.7
 BuildRequires:	autoconf
@@ -27,8 +26,7 @@ mikmod jest odtwarzaczem modu³ów obs³uguj±cym formaty: 669, DSM, FAR,
 IT, MOD, MED, MTM, S3M, ULT, XM i MOD-15.
 
 %prep
-%setup -q -n %{name}-%{ver}
-%patch -p1
+%setup -q -n %{name}-%{ver}-%{rel}
 
 %build
 aclocal
