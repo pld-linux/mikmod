@@ -13,7 +13,7 @@ Patch:		mikmod-%{ver}-a.patch
 URL:		http://mikmod.darkorb.net/
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	libmikmod-devel >= 3.1.7
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 mikmod is a 669, DSM, FAR, IT, MOD, MED, MTM, S3M, ULT, XM, and MOD-15
