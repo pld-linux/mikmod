@@ -8,8 +8,8 @@ Release:	3
 License:	GPL
 Group:		Applications/Sound
 Group(pl):	Aplikacje/D¼wiêk
-Source:		http://mikmod.darkorb.net/mikmod/%{name}-%{ver}.tar.gz
-Patch:		mikmod-%{ver}-a.patch
+Source0:	http://mikmod.darkorb.net/mikmod/%{name}-%{ver}.tar.gz
+Patch0:		mikmod-%{ver}-a.patch
 URL:		http://mikmod.darkorb.net/
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	libmikmod-devel >= 3.1.7
@@ -20,8 +20,8 @@ mikmod is a 669, DSM, FAR, IT, MOD, MED, MTM, S3M, ULT, XM, and MOD-15
 player.
 
 %description -l pl
-mikmod jest odtwarzaczem modu³ów obs³uguj±cym formaty: 669, DSM, FAR, IT,
-MOD, MED, MTM, S3M, ULT, XM i MOD-15.
+mikmod jest odtwarzaczem modu³ów obs³uguj±cym formaty: 669, DSM, FAR,
+IT, MOD, MED, MTM, S3M, ULT, XM i MOD-15.
 
 %prep
 %setup -q -n %{name}-%{ver}
