@@ -6,7 +6,7 @@ Summary(pt_BR):	Reprodutor de arquivos de som XM, MOD, MTM, S3M, STM, ULT, IT e 
 Summary(es):	Reproductor de archivos de sonido XM, MOD, MTM, S3M, STM, ULT, IT e UNI
 Name:		mikmod
 Version:	%{ver}%{rel}
-Release:	7
+Release:	8
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://www.mikmod.org/files/mikmod/%{name}-%{ver}-%{rel}.tar.gz
