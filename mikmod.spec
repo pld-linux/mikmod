@@ -9,13 +9,14 @@ Version:	%{ver}%{rel}
 Release:	8
 License:	GPL
 Group:		Applications/Sound
-Source0:	http://www.mikmod.org/files/mikmod/%{name}-%{ver}-%{rel}.tar.gz
+# note: current stable version is 3.2.1
+Source0:	http://mikmod.raphnet.net/files/%{name}-%{ver}-%{rel}.tar.gz
 # Source0-md5:	eb66900fac76e9cc280a1c85efec3733
 Patch0:		%{name}-marchive_security.patch
 Patch1:		%{name}-whitespace.patch
 Patch2:		%{name}-prefixes.patch
 Patch3:		%{name}-va.patch
-URL:		http://www.mikmod.org/
+URL:		http://mikmod.raphnet.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libmikmod-devel >= 3.1.7
