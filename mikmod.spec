@@ -4,9 +4,10 @@ Summary:	Sound module player
 Summary(pl):	Odtwarzacz modu³ów d¼wiêkowych
 Name:		mikmod
 Version:	%{ver}%{rel}
-Release:	4
+Release:	5
 License:	GPL
 Group:		Applications/Sound
+Group(de):	Applikationen/Laut
 Group(pl):	Aplikacje/D¼wiêk
 Source0:	http://mikmod.darkorb.net/mikmod/%{name}-%{ver}.tar.gz
 Patch0:		%{name}-%{ver}-a.patch
@@ -28,7 +29,7 @@ IT, MOD, MED, MTM, S3M, ULT, XM i MOD-15.
 %patch -p1
 
 %build
-CFLAGS="$RPM_OPT_FLAGS -I/usr/include/ncurses"; export CFLAGS
+CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g} -I%{_includedir}/ncurses"
 %configure
 
 %{__make}
@@ -36,17 +37,15 @@ CFLAGS="$RPM_OPT_FLAGS -I/usr/include/ncurses"; export CFLAGS
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install DESTDIR="$RPM_BUILD_ROOT"
+%{__make} install DESTDIR=$RPM_BUILD_ROOT
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man1/* \
-	README AUTHORS NEWS
+gzip -9nf README AUTHORS NEWS
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {README,AUTHORS,NEWS}.gz
+%doc *.gz
 %attr(755,root,root) %{_bindir}/mikmod
-
 %{_mandir}/man1/*
