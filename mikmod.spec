@@ -29,7 +29,7 @@ IT, MOD, MED, MTM, S3M, ULT, XM i MOD-15.
 %patch -p1
 
 %build
-CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g} -I%{_includedir}/ncurses"
+CFLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS} -I%{_includedir}/ncurses"
 %configure
 
 %{__make}
