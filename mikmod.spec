@@ -2,9 +2,9 @@
 %define		ver	3.1.6
 %define		rel	a
 Summary:	XM, MOD, MTM, S3M, STM, ULT, IT and UNI module player
-Summary(pl):	Odtwarzacz modu≥Ûw dºwiÍkowych XM, MOD, MTM, S3M, STM, ULT, IT e UNI
-Summary(pt_BR):	Reprodutor de arquivos de som XM, MOD, MTM, S3M, STM, ULT, IT e UNI
-Summary(es):	Reproductor de archivos de sonido XM, MOD, MTM, S3M, STM, ULT, IT e UNI
+Summary(pl.UTF-8):   Odtwarzacz modu≈Ç√≥w d≈∫wiƒôkowych XM, MOD, MTM, S3M, STM, ULT, IT e UNI
+Summary(pt_BR.UTF-8):   Reprodutor de arquivos de som XM, MOD, MTM, S3M, STM, ULT, IT e UNI
+Summary(es.UTF-8):   Reproductor de archivos de sonido XM, MOD, MTM, S3M, STM, ULT, IT e UNI
 Name:		mikmod
 Version:	%{ver}%{rel}
 Release:	8
@@ -36,39 +36,39 @@ loading/saving of playlists.
 
 Install the mikmod package if you need a MOD music file player.
 
-%description -l pl
-mikmod jest odtwarzaczem modu≥Ûw obs≥uguj±cym formaty: 669, DSM, FAR,
+%description -l pl.UTF-8
+mikmod jest odtwarzaczem modu≈Ç√≥w obs≈ÇugujƒÖcym formaty: 669, DSM, FAR,
 IT, MOD, MED, MTM, S3M, ULT, XM i MOD-15.
 
-Zainstaluj mikmod, jeøeli potrzebujesz odtwarzacza plikÛw MOD.
+Zainstaluj mikmod, je≈ºeli potrzebujesz odtwarzacza plik√≥w MOD.
 
-%description -l pt_BR
+%description -l pt_BR.UTF-8
 Um dos melhores e mais conhecido reprodutor de MOD para Unix. Reproduz
-m˙sicas em formato MOD.
+m√∫sicas em formato MOD.
 
-O MikMod È um reprodutor port·vel de mÛdulos originalmente escrito por
-Jean-Paul Mikkers (MikMak) para o DOS. Ele foi subseq¸entemente
-modificado por muitas m„os e agora roda em muitas plataformas, com
-esta distribuiÁ„o projetada para compilar sem problemas em um ambiente
+O MikMod √© um reprodutor port√°vel de m√≥dulos originalmente escrito por
+Jean-Paul Mikkers (MikMak) para o DOS. Ele foi subseq√ºentemente
+modificado por muitas m√£os e agora roda em muitas plataformas, com
+esta distribui√ß√£o projetada para compilar sem problemas em um ambiente
 Unix (Linux). Ele usa o driver /dev/dsp OSS incluso em todos os kernel
-recentes para saÌda e tambÈm escreve arquivos WAV. Os formatos de
+recentes para sa√≠da e tamb√©m escreve arquivos WAV. Os formatos de
 arquivos suportados incluem: mod, stm, s3m, mtm, xm e it. O reprodutor
-usa ncurses para saÌda no console e suporta carga transparente de
-arquivos gzip/pkzip/zoo e carga/gravaÁ„o de listas de m˙sicas para
-reproduÁ„o.
+usa ncurses para sa√≠da no console e suporta carga transparente de
+arquivos gzip/pkzip/zoo e carga/grava√ß√£o de listas de m√∫sicas para
+reprodu√ß√£o.
 
-%description -l es
-Uno de los mejores y m·s conocido reproductor de MOD para Unix.
-Reproduce m˙sicas en formato MOD. MikMod es un reproductor port·til de
-mÛdulos originalmente escrito por Jean-Paul Mikkers (MikMak) para el
+%description -l es.UTF-8
+Uno de los mejores y m√°s conocido reproductor de MOD para Unix.
+Reproduce m√∫sicas en formato MOD. MikMod es un reproductor port√°til de
+m√≥dulos originalmente escrito por Jean-Paul Mikkers (MikMak) para el
 DOS. Fue sucesivamente modificado por muchas manos y ahora se ejecuta
-en muchas plataformas, con esta distribuciÛn proyectada para compilar
+en muchas plataformas, con esta distribuci√≥n proyectada para compilar
 sin problemas en un ambiente Unix (Linux). Usa el driver /dev/dsp OSS
-incluso en todos los kernel recientes para salida y tambiÈn escribe
+incluso en todos los kernel recientes para salida y tambi√©n escribe
 archivos WAV. Los formatos de archivos soportados incluyen: mod, stm,
 s3m, mtm, xm y it. El reproductor usa ncurses para salida en la
 pantalla y soporta carga transparente de archivos gzip/pkzip/zoo y
-carga/grabaciÛn de listas de m˙sicas para reproducciÛn.
+carga/grabaci√≥n de listas de m√∫sicas para reproducci√≥n.
 
 
 %prep
