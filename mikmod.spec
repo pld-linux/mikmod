@@ -2,9 +2,9 @@
 %define		ver	3.1.6
 %define		rel	a
 Summary:	XM, MOD, MTM, S3M, STM, ULT, IT and UNI module player
-Summary(pl.UTF-8):   Odtwarzacz modułów dźwiękowych XM, MOD, MTM, S3M, STM, ULT, IT e UNI
-Summary(pt_BR.UTF-8):   Reprodutor de arquivos de som XM, MOD, MTM, S3M, STM, ULT, IT e UNI
-Summary(es.UTF-8):   Reproductor de archivos de sonido XM, MOD, MTM, S3M, STM, ULT, IT e UNI
+Summary(pl.UTF-8):	Odtwarzacz modułów dźwiękowych XM, MOD, MTM, S3M, STM, ULT, IT e UNI
+Summary(pt_BR.UTF-8):	Reprodutor de arquivos de som XM, MOD, MTM, S3M, STM, ULT, IT e UNI
+Summary(es.UTF-8):	Reproductor de archivos de sonido XM, MOD, MTM, S3M, STM, ULT, IT e UNI
 Name:		mikmod
 Version:	%{ver}%{rel}
 Release:	8
