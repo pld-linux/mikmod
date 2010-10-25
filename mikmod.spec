@@ -1,27 +1,21 @@
-# TODO: current stable version is 3.2.1
-%define		ver	3.1.6
-%define		rel	a
 Summary:	XM, MOD, MTM, S3M, STM, ULT, IT and UNI module player
 Summary(pl.UTF-8):	Odtwarzacz modułów dźwiękowych XM, MOD, MTM, S3M, STM, ULT, IT e UNI
 Summary(pt_BR.UTF-8):	Reprodutor de arquivos de som XM, MOD, MTM, S3M, STM, ULT, IT e UNI
 Summary(es.UTF-8):	Reproductor de archivos de sonido XM, MOD, MTM, S3M, STM, ULT, IT e UNI
 Name:		mikmod
-Version:	%{ver}%{rel}
-Release:	8
-License:	GPL
+Version:	3.2.1
+Release:	1
+License:	GPL v2+
 Group:		Applications/Sound
 #Source0Download: http://mikmod.raphnet.net/
-Source0:	http://mikmod.raphnet.net/files/%{name}-%{ver}-%{rel}.tar.gz
-# Source0-md5:	eb66900fac76e9cc280a1c85efec3733
-Patch0:		%{name}-marchive_security.patch
-Patch1:		%{name}-whitespace.patch
-Patch2:		%{name}-prefixes.patch
-Patch3:		%{name}-va.patch
+Source0:	http://mikmod.raphnet.net/files/%{name}-%{version}.tar.gz
+# Source0-md5:	a60c3221ca48aed301f4b62b4741eebe
 URL:		http://mikmod.raphnet.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libmikmod-devel >= 3.1.7
 BuildRequires:	ncurses-devel >= 5.0
+Requires:	libmikmod >= 3.1.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -29,18 +23,20 @@ MikMod is one of the best and most well known MOD music file players
 for UNIX-like systems. This particular distribution is intended to
 compile fairly painlessly in a Linux environment. MikMod uses the OSS
 /dev/dsp driver including all recent kernels for output, and will also
-write .WAV files. Supported file formats include MOD, STM, S3M, MTM,
-XM, ULT, and IT. The player uses ncurses for console output and
-supports transparent loading from gzip/pkzip/zoo archives and the
-loading/saving of playlists.
-
-Install the mikmod package if you need a MOD music file player.
+write .WAV files. Supported file formats include 669, AMF, APUN, DSM,
+FAR, GDM, IT, IMF, MOD, MED, MTM, OKT, S3M, STM, STX, ULT, UNI and XM.
+The player uses ncurses for console output and supports transparent
+loading from gzip/pkzip/zoo archives and the loading/saving of
+playlists.
 
 %description -l pl.UTF-8
-mikmod jest odtwarzaczem modułów obsługującym formaty: 669, DSM, FAR,
-IT, MOD, MED, MTM, S3M, ULT, XM i MOD-15.
-
-Zainstaluj mikmod, jeżeli potrzebujesz odtwarzacza plików MOD.
+MikMod jest odtwarzaczem modułów dla systemów uniksowych, w tym dla
+Linuksa. Potrafi odtwarzać poprzez OSS (/dev/dsp) oraz zapisywać do
+plików .WAV. Obsługującym formaty modułów to: 669, AMF, APUN, DSM,
+FAR, GDM, IT, IMF, MOD, MED, MTM, OKT, S3M, STM, STX, ULT, UNI i XM.
+Odtwarzacz ma tekstowy interfejs ncurses, potrafi w sposób
+przezroczysty wczytywać moduły z archiwów gzip/pkzip/zoo; obsługuje
+także playlisty (odczyt i zapis).
 
 %description -l pt_BR.UTF-8
 Um dos melhores e mais conhecido reprodutor de MOD para Unix. Reproduz
@@ -70,19 +66,17 @@ s3m, mtm, xm y it. El reproductor usa ncurses para salida en la
 pantalla y soporta carga transparente de archivos gzip/pkzip/zoo y
 carga/grabación de listas de músicas para reproducción.
 
-
 %prep
-%setup -q -n %{name}-%{ver}-%{rel}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%setup -q
 
 %build
 %{__aclocal}
 %{__autoconf}
+%{__autoheader}
+%{__automake}
 CFLAGS="%{rpmcflags} -I/usr/include/ncurses"
-%configure
+%configure \
+	--enable-color-interface
 
 %{__make}
 
@@ -99,4 +93,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README AUTHORS NEWS
 %attr(755,root,root) %{_bindir}/mikmod
-%{_mandir}/man1/*
+%{_mandir}/man1/mikmod.1*
