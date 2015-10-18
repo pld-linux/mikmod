@@ -3,16 +3,15 @@ Summary(pl.UTF-8):	Odtwarzacz modułów dźwiękowych XM, MOD, MTM, S3M, STM, UL
 Summary(pt_BR.UTF-8):	Reprodutor de arquivos de som XM, MOD, MTM, S3M, STM, ULT, IT e UNI
 Summary(es.UTF-8):	Reproductor de archivos de sonido XM, MOD, MTM, S3M, STM, ULT, IT e UNI
 Name:		mikmod
-Version:	3.2.1
+Version:	3.2.6
 Release:	1
 License:	GPL v2+
 Group:		Applications/Sound
-#Source0Download: http://mikmod.raphnet.net/
-Source0:	http://mikmod.raphnet.net/files/%{name}-%{version}.tar.gz
-# Source0-md5:	a60c3221ca48aed301f4b62b4741eebe
-URL:		http://mikmod.raphnet.net/
-BuildRequires:	autoconf
-BuildRequires:	automake
+Source0:	http://downloads.sourceforge.net/mikmod/%{name}-%{version}.tar.gz
+# Source0-md5:	dd98164322559b70e7f1bd3ece733110
+URL:		http://mikmod.sourceforge.net/
+BuildRequires:	autoconf >= 2.59
+BuildRequires:	automake >= 1:1.7
 BuildRequires:	libmikmod-devel >= 3.1.7
 BuildRequires:	ncurses-devel >= 5.0
 Requires:	libmikmod >= 3.1.7
@@ -74,9 +73,7 @@ carga/grabación de listas de músicas para reproducción.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-CFLAGS="%{rpmcflags} -I/usr/include/ncurses"
-%configure \
-	--enable-color-interface
+%configure
 
 %{__make}
 
@@ -91,6 +88,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README AUTHORS NEWS
+%doc AUTHORS NEWS README
 %attr(755,root,root) %{_bindir}/mikmod
+%{_datadir}/mikmod
 %{_mandir}/man1/mikmod.1*
