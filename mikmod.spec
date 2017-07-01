@@ -3,18 +3,18 @@ Summary(pl.UTF-8):	Odtwarzacz modułów dźwiękowych XM, MOD, MTM, S3M, STM, UL
 Summary(pt_BR.UTF-8):	Reprodutor de arquivos de som XM, MOD, MTM, S3M, STM, ULT, IT e UNI
 Summary(es.UTF-8):	Reproductor de archivos de sonido XM, MOD, MTM, S3M, STM, ULT, IT e UNI
 Name:		mikmod
-Version:	3.2.7
+Version:	3.2.8
 Release:	1
 License:	GPL v2+
 Group:		Applications/Sound
 Source0:	http://downloads.sourceforge.net/mikmod/%{name}-%{version}.tar.gz
-# Source0-md5:	0742c1868187bba8730ea43aea552e18
+# Source0-md5:	01478623b273d7d2e2c6e45c1c478533
 URL:		http://mikmod.sourceforge.net/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake >= 1:1.7
-BuildRequires:	libmikmod-devel >= 3.1.7
+BuildRequires:	libmikmod-devel >= 3.2.0
 BuildRequires:	ncurses-devel >= 5.0
-Requires:	libmikmod >= 3.1.7
+Requires:	libmikmod >= 3.2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
